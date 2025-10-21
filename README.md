@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Hakika - Decentralized Media Social Network</h1>
   
-  <!-- Badges: Tech Stack -->
+  <!-- Badges: Tech Stack  -->
   <p>
     <img src="https://img.shields.io/badge/Frontend-React-blue?logo=react&logoColor=white" alt="React"/>
     <img src="https://img.shields.io/badge/Vite-Development-purple?logo=vite&logoColor=white" alt="Vite"/>
