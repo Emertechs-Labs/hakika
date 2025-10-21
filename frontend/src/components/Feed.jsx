@@ -95,6 +95,7 @@ const Feed = () => {
                     downvotes={post.downvotes || 0}
                     comments={0} // Placeholder
                     timestamp={new Date(post.createdAt).toLocaleDateString()}
+                    image={post.image}
                   />
                 </motion.div>
               ))}

@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema({
   content: String,
   niche: { type: String, enum: ['sports', 'fashion', 'entertainment', 'lifestyle'] },
   author: String,
+  image: String, // IPFS URL
   verified: { type: Boolean, default: false },
   verificationScore: { type: Number, default: 0 },
   flagged: { type: Boolean, default: false },

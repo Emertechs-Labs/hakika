@@ -36,14 +36,20 @@ Hakika is a visually stunning, decentralized social network empowering independe
 - <b>Gamified Engagement:</b> Earn badges and reputation through participatory verification
 - <b>Decentralized Trust:</b> Cardano blockchain for immutable reputation and rewards
 - <b>Web3 Native:</b> Wallet-based authentication and token economies
+- <b>IPFS Storage:</b> Decentralized media storage for images and files
+- <b>PWA Ready:</b> Installable app with offline capabilities
+- <b>Multi-Theme Support:</b> Light, dark, blue, green, purple themes
+- <b>Mobile Optimized:</b> Responsive design with touch-friendly interactions
+- <b>Advanced Animations:</b> Smooth transitions and hover effects with Framer Motion
 
 ## 🛠️ Tech Stack
 <ul>
-  <li><b>Frontend:</b> React + Vite, TailwindCSS, Lucide icons</li>
-  <li><b>Backend:</b> Node.js + Express, MongoDB</li>
+  <li><b>Frontend:</b> React + Vite, TailwindCSS, Lucide icons, Framer Motion, shadcn/ui</li>
+  <li><b>Backend:</b> Node.js + Express, MongoDB, Helmet, Rate Limiting</li>
   <li><b>AI/Agents:</b> ASI:One API, Agentverse, MeTTa</li>
-  <li><b>Blockchain:</b> Cardano (Plutus contracts)</li>
+  <li><b>Blockchain:</b> Cardano (Mesh SDK), IPFS (Web3.Storage)</li>
   <li><b>Agents:</b> Fetch.ai uAgents for orchestration</li>
+  <li><b>Testing:</b> Playwright (e2e), Jest (unit)</li>
 </ul>
 
 ## 🚀 Quick Start

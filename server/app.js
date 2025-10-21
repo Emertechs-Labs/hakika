@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const postRoutes = require('./routes/posts');
 const agiRoutes = require('./routes/agi');
 const rewardRoutes = require('./routes/reward');
@@ -9,8 +11,27 @@ const userRoutes = require('./routes/users');
 require('dotenv').config();
 
 const app = express();
+
+// Security middleware
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.'
+});
+app.use('/api/', limiter);
+
+// Stricter rate limiting for AI endpoints
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: 'AI API rate limit exceeded.'
+});
+app.use('/api/agi', aiLimiter);
 
 if (process.env.NODE_ENV !== 'test') {
   mongoose

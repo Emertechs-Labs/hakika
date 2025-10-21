@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AGIDrafting from './AGIDrafting';
+import { uploadToIPFS } from '../lib/ipfs';
 
 const CreatePost = () => {
-  const [form, setForm] = useState({ title: '', content: '', niche: 'sports', author: 'Anonymous' });
+  const [form, setForm] = useState({ title: '', content: '', niche: 'sports', author: 'Anonymous', image: '' });
+  const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/posts', form);
+      let imageUrl = '';
+      if (imageFile) {
+        imageUrl = await uploadToIPFS(imageFile);
+      }
+      const postData = { ...form, image: imageUrl };
+      await axios.post('http://localhost:5000/api/posts', postData);
       alert('Post created and verified by AGI!');
-      setForm({ title: '', content: '', niche: 'sports', author: 'Anonymous' });
+      setForm({ title: '', content: '', niche: 'sports', author: 'Anonymous', image: '' });
+      setImageFile(null);
     } catch (err) {
-      // Error handled with alert; could improve UI feedback
       alert('Error creating post. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
   };
 
   const applySuggestion = (suggestion) => {
@@ -53,6 +68,12 @@ const CreatePost = () => {
           <option value="entertainment">Entertainment</option>
           <option value="lifestyle">Lifestyle</option>
         </select>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full p-2 mb-2 border"
+        />
         <button type="submit" className="bg-blue-500 text-white p-2 rounded" disabled={loading}>
           {loading ? 'Creating...' : 'Create Post'}
         </button>
