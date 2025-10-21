@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const { getAIMetrics } = require('../metta_integration');
 
 const router = express.Router();
 
@@ -21,6 +22,11 @@ router.post('/suggest', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// AI metrics endpoint
+router.get('/metrics', (req, res) => {
+  res.json(getAIMetrics());
 });
 
 module.exports = router;

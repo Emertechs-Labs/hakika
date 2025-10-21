@@ -31,6 +31,8 @@ router.post('/', async (req, res) => {
     const verification = await combinedVerification(content);
     post.verified = verification.isVerified;
     post.verificationScore = verification.score;
+    post.flagged = verification.flagged;
+    post.predictiveScore = verification.predictiveScore;
     await post.save();
 
     res.status(201).json(post);
@@ -80,6 +82,8 @@ router.post('/:id/reverify', async (req, res) => {
     const verification = await combinedVerification(post.content);
     post.verified = verification.isVerified;
     post.verificationScore = verification.score;
+    post.flagged = verification.flagged;
+    post.predictiveScore = verification.predictiveScore;
     await post.save();
 
     res.json(post);

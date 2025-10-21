@@ -4,6 +4,7 @@ const cors = require('cors');
 const postRoutes = require('./routes/posts');
 const agiRoutes = require('./routes/agi');
 const rewardRoutes = require('./routes/reward');
+const agentverseRoutes = require('./routes/agentverse');
 require('dotenv').config();
 
 const app = express();
@@ -19,7 +20,8 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use('/api/posts', postRoutes);
 app.use('/api/agi', agiRoutes);
-app.use('/api/reward', rewardRoutes);
+app.use('/api/rewards', rewardRoutes);
+app.use('/api/agentverse', agentverseRoutes);
 
 app.get('/', (req, res) => res.send('Hakika Backend API'));
 
