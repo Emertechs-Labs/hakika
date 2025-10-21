@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PostCard from './PostCard';
 import Leaderboard from './Leaderboard';
+import { motion } from 'framer-motion';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -35,9 +36,29 @@ const Feed = () => {
         <div className="lg:col-span-2">
           <h1 className="text-2xl font-bold mb-4">Hakika Feed</h1>
           {loading && <p>Loading posts...</p>}
-          <div className="space-y-4">
+          <motion.div
+            className="space-y-4"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
+          >
             {posts.map(post => (
-              <PostCard
+              <motion.div
+                key={post._id}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+              >
+                <PostCard
                 key={post._id}
                 id={post._id}
                 title={post.title}
@@ -53,9 +74,10 @@ const Feed = () => {
                 downvotes={post.downvotes || 0}
                 comments={0} // Placeholder
                 timestamp={new Date(post.createdAt).toLocaleDateString()}
-              />
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
         <div className="lg:col-span-1">
           <Leaderboard />

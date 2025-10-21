@@ -4,8 +4,8 @@ This document outlines a sprint-based plan for implementing the remaining featur
 
 ## Sprint Progress
 - **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
-- **Current Focus**: Progressive Enhancement (Completed) - Added offline caching for posts and API responses.
-- **Next**: Animations & Interactions (In Progress)
+- **Current Focus**: Animations & Interactions (Completed) - Added Framer Motion for card animations, hover effects, staggered loading.
+- **Next**: Accessibility (In Progress)
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.

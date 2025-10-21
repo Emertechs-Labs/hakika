@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 interface PostCardProps {
   id: string;
@@ -51,13 +52,20 @@ export default function PostCard({
   };
 
   return (
-    <Card className="card-hover overflow-hidden">
-      {image && (
-        <div className="aspect-video w-full overflow-hidden bg-muted">
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-        </div>
-      )}
-      <CardContent className="p-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      whileHover={{ scale: 1.02 }}
+      className="card-hover"
+    >
+      <Card className="overflow-hidden">
+        {image && (
+          <div className="aspect-video w-full overflow-hidden bg-muted">
+            <img src={image} alt={title} className="w-full h-full object-cover" />
+          </div>
+        )}
+        <CardContent className="p-6">
         <div className="flex items-center gap-2 mb-3">
           <Badge variant="outline" className="text-xs">
             {niche}
@@ -132,5 +140,6 @@ export default function PostCard({
         </div>
       </CardContent>
     </Card>
+    </motion.div>
   );
 }
