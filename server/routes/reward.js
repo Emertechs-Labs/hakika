@@ -1,5 +1,5 @@
 const express = require('express');
-const { mintReputationToken } = require('../cardano_integration');
+const { mintReputationToken } = require('../../blockchain/cardano_integration');
 
 const router = express.Router();
 
