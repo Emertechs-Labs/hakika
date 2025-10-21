@@ -98,35 +98,35 @@ export default function PostCard({
           <span className="text-xs text-muted-foreground">{timestamp}</span>
         </div>
 
-        <div className="flex items-center gap-4 mt-4 pt-4 border-t">
+        <div className="flex items-center gap-4 mt-4 pt-4 border-t flex-wrap">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => handleVote('up')}
-            className="gap-2"
+            className="gap-2 min-h-[44px] px-3" // Touch-friendly
           >
             <ThumbsUp className="h-4 w-4" />
-            <span>{upvotes}</span>
+            <span className="hidden sm:inline">{upvotes}</span> {/* Hide count on small screens */}
           </Button>
 
           <Button
             variant="ghost"
             size="sm"
             onClick={() => handleVote('down')}
-            className="gap-2"
+            className="gap-2 min-h-[44px] px-3"
           >
             <ThumbsDown className="h-4 w-4" />
-            <span>{downvotes}</span>
+            <span className="hidden sm:inline">{downvotes}</span>
           </Button>
 
-          <Button variant="ghost" size="sm" asChild className="gap-2">
+          <Button variant="ghost" size="sm" asChild className="gap-2 min-h-[44px] px-3">
             <Link to={`/post/${id}`}>
               <MessageCircle className="h-4 w-4" />
-              <span>{comments}</span>
+              <span className="hidden sm:inline">{comments}</span>
             </Link>
           </Button>
 
-          <Button variant="ghost" size="sm" className="gap-2 ml-auto">
+          <Button variant="ghost" size="sm" className="gap-2 ml-auto min-h-[44px] px-3">
             <Share2 className="h-4 w-4" />
           </Button>
         </div>

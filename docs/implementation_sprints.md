@@ -4,8 +4,8 @@ This document outlines a sprint-based plan for implementing the remaining featur
 
 ## Sprint Progress
 - **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
-- **Current Focus**: Gamification UI (Completed) - Added voting on posts, user reputation/badges, leaderboard component.
-- **Next**: Wallet/Auth Polish (In Progress)
+- **Current Focus**: Mobile Optimization (Completed) - Added touch-friendly buttons, responsive layouts, PWA setup.
+- **Next**: Progressive Enhancement (In Progress)
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.
