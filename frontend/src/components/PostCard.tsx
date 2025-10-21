@@ -1,9 +1,10 @@
-import { Heart, MessageCircle, Share2, CheckCircle, Award } from "lucide-react";
+import { Heart, MessageCircle, Share2, CheckCircle, Award, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 interface PostCardProps {
   id: string;
@@ -16,7 +17,8 @@ interface PostCardProps {
   };
   niche: string;
   verified: boolean;
-  likes: number;
+  upvotes: number;
+  downvotes: number;
   comments: number;
   timestamp: string;
   image?: string;
@@ -29,17 +31,23 @@ export default function PostCard({
   author,
   niche,
   verified,
-  likes: initialLikes,
+  upvotes: initialUpvotes,
+  downvotes: initialDownvotes,
   comments,
   timestamp,
   image,
 }: PostCardProps) {
-  const [likes, setLikes] = useState(initialLikes);
-  const [isLiked, setIsLiked] = useState(false);
+  const [upvotes, setUpvotes] = useState(initialUpvotes);
+  const [downvotes, setDownvotes] = useState(initialDownvotes);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikes(isLiked ? likes - 1 : likes + 1);
+  const handleVote = async (vote: 'up' | 'down') => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/posts/${id}/vote`, { vote });
+      setUpvotes(response.data.upvotes);
+      setDownvotes(response.data.downvotes);
+    } catch (err) {
+      console.error('Vote failed:', err);
+    }
   };
 
   return (
@@ -94,11 +102,21 @@ export default function PostCard({
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleLike}
-            className={`gap-2 ${isLiked ? "text-destructive" : ""}`}
+            onClick={() => handleVote('up')}
+            className="gap-2"
           >
-            <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
-            <span>{likes}</span>
+            <ThumbsUp className="h-4 w-4" />
+            <span>{upvotes}</span>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => handleVote('down')}
+            className="gap-2"
+          >
+            <ThumbsDown className="h-4 w-4" />
+            <span>{downvotes}</span>
           </Button>
 
           <Button variant="ghost" size="sm" asChild className="gap-2">

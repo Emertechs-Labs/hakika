@@ -9,6 +9,8 @@ const postSchema = new mongoose.Schema({
   verificationScore: { type: Number, default: 0 },
   flagged: { type: Boolean, default: false },
   predictiveScore: { type: Number, default: 0 },
+  upvotes: { type: Number, default: 0 },
+  downvotes: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 });
 

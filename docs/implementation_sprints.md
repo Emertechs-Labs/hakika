@@ -3,8 +3,9 @@
 This document outlines a sprint-based plan for implementing the remaining features in Hakika, prioritized by AI focus and frontend needs. Each feature is broken into user stories with story points (effort estimates using Fibonacci scale: 1=trivial, 2=small, 3=medium, 5=large, 8=xlarge, 13=epic). Sprints are 2 weeks each, assuming a small team (1-2 devs).
 
 ## Sprint Progress
-- **Sprint 1 Completed**: October 21, 2025 - All AI core stories implemented: MeTTa integration, autonomous uAgents, marketplace, proactive features, and testing/metrics.
-- **Next Sprint**: Sprint 2 - Frontend Polish & Gamification (Start soon)
+- **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
+- **Current Focus**: Gamification UI (Completed) - Added voting on posts, user reputation/badges, leaderboard component.
+- **Next**: Wallet/Auth Polish (In Progress)
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.

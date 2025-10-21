@@ -92,4 +92,26 @@ router.post('/:id/reverify', async (req, res) => {
   }
 });
 
+// Vote on post
+router.post('/:id/vote', async (req, res) => {
+  try {
+    const { vote } = req.body; // 'up' or 'down'
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    if (vote === 'up') {
+      post.upvotes += 1;
+    } else if (vote === 'down') {
+      post.downvotes += 1;
+    }
+    await post.save();
+
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
