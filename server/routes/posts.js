@@ -8,7 +8,12 @@ const router = express.Router();
 // Get all posts
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 });
+    const { since } = req.query;
+    let query = {};
+    if (since) {
+      query.createdAt = { $gt: new Date(since) };
+    }
+    const posts = await Post.find(query).sort({ createdAt: -1 });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -27,9 +32,6 @@ router.post('/', async (req, res) => {
     post.verified = verification.isVerified;
     post.verificationScore = verification.score;
     await post.save();
-
-    // Trigger uAgent for autonomous refinement
-    triggerAgentVerification(post._id);
 
     res.status(201).json(post);
   } catch (err) {
@@ -85,14 +87,5 @@ router.post('/:id/reverify', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-function triggerAgentVerification(postId) {
-  // Spawn uAgent process (async, non-blocking)
-  const { spawn } = require('child_process');
-  const scriptPath = path.join(__dirname, '..', 'agents', 'verification_agent.py');
-  spawn('python', [scriptPath, postId, process.env.AGENT_BACKEND_URL || 'http://localhost:5000'], {
-    stdio: 'inherit'
-  });
-}
 
 module.exports = router;
