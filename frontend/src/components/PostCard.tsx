@@ -58,6 +58,8 @@ export default function PostCard({
       transition={{ duration: 0.3 }}
       whileHover={{ scale: 1.02 }}
       className="card-hover"
+      role="article"
+      aria-labelledby={`post-title-${id}`}
     >
       <Card className="overflow-hidden">
         {image && (
@@ -79,7 +81,7 @@ export default function PostCard({
         </div>
 
         <Link to={`/post/${id}`}>
-          <h3 className="text-xl font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
+          <h3 id={`post-title-${id}`} className="text-xl font-bold mb-2 hover:text-primary transition-colors line-clamp-2">
             {title}
           </h3>
         </Link>
@@ -111,10 +113,11 @@ export default function PostCard({
             variant="ghost"
             size="sm"
             onClick={() => handleVote('up')}
-            className="gap-2 min-h-[44px] px-3" // Touch-friendly
+            className="gap-2 min-h-[44px] px-3"
+            aria-label={`Upvote post: ${upvotes} upvotes`}
           >
-            <ThumbsUp className="h-4 w-4" />
-            <span className="hidden sm:inline">{upvotes}</span> {/* Hide count on small screens */}
+            <ThumbsUp className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden sm:inline">{upvotes}</span>
           </Button>
 
           <Button
@@ -122,20 +125,21 @@ export default function PostCard({
             size="sm"
             onClick={() => handleVote('down')}
             className="gap-2 min-h-[44px] px-3"
+            aria-label={`Downvote post: ${downvotes} downvotes`}
           >
-            <ThumbsDown className="h-4 w-4" />
+            <ThumbsDown className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">{downvotes}</span>
           </Button>
 
           <Button variant="ghost" size="sm" asChild className="gap-2 min-h-[44px] px-3">
-            <Link to={`/post/${id}`}>
-              <MessageCircle className="h-4 w-4" />
+            <Link to={`/post/${id}`} aria-label={`View post details: ${title}`}>
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">{comments}</span>
             </Link>
           </Button>
 
-          <Button variant="ghost" size="sm" className="gap-2 ml-auto min-h-[44px] px-3">
-            <Share2 className="h-4 w-4" />
+          <Button variant="ghost" size="sm" className="gap-2 ml-auto min-h-[44px] px-3" aria-label="Share post">
+            <Share2 className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </CardContent>

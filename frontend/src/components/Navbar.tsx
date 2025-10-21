@@ -77,15 +77,17 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6" role="navigation" aria-label="Main navigation">
           <NavLinks />
         </nav>
 
         {/* Search Bar */}
         <form onSubmit={handleSearch} className="hidden lg:flex items-center flex-1 max-w-md mx-4">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <label htmlFor="search-input" className="sr-only">Search posts, users, niches</label>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <Input
+              id="search-input"
               type="search"
               placeholder="Search posts, users, niches..."
               className="pl-10"
@@ -155,7 +157,7 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col space-y-4 mt-8">
+              <nav className="flex flex-col space-y-4 mt-8" role="navigation" aria-label="Mobile navigation">
                 <NavLinks />
               </nav>
             </SheetContent>
