@@ -48,7 +48,7 @@ Hakika is a visually stunning, decentralized social network empowering independe
 
 ## 🚀 Quick Start
 1. Clone the repo
-2. Unzip <code>frontend.zip</code> and <code>cd frontend</code>
+2. <code>cd frontend</code>
 3. Run <code>npm install && npm run dev</code>
 4. For backend: <code>cd server && npm install && npm start</code>
 5. Connect Web3 wallet for auth
@@ -66,6 +66,7 @@ Hakika is a visually stunning, decentralized social network empowering independe
   <li><a href="docs/api_docs.md">API Docs</a></li>
   <li><a href="docs/contributing.md">Contributing</a></li>
   <li><a href="docs/roadmap.md">Roadmap</a></li>
+  <li><a href="docs/implementation_sprints.md">Implementation Sprints</a></li>
   <li><a href="docs/testing.md">Testing Guide</a></li>
   <li><a href="docs/submission.md">Submission Summary</a></li>
   <li><a href="docs/deployment.md">Deployment Guide</a></li>
