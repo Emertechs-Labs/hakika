@@ -1,0 +1,39 @@
+# See https://github.com/github/gitignore/blob/main/Node.gitignore for template
+# Node
+node_modules/
+dist/
+build/
+.env
+.env.*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Logs
+logs/
+*.log
+
+# Test
+coverage/
+__tests__/
+
+# Misc
+*.zip
+*.tgz
+*.tar.gz
+
+# Ignore frontend and server build artifacts
+frontend/node_modules/
+frontend/dist/
+server/node_modules/
+server/dist/
