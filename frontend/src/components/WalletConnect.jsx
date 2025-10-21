@@ -1,72 +1,86 @@
-import React, { useState } from 'react';
-import { MeshProvider, useWallet } from '@meshsdk/react';
+import React from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Wallet, AlertCircle, CheckCircle } from 'lucide-react';
+import { Wallet, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 
 function WalletConnect() {
-  const { connect, wallet, disconnect, error } = useWallet();
-  const [connecting, setConnecting] = useState(false);
-
-  const handleConnect = async (walletName) => {
-    setConnecting(true);
-    try {
-      await connect(walletName);
-    } catch (err) {
-      console.error('Connection failed:', err);
-    } finally {
-      setConnecting(false);
-    }
-  };
+  const { user, isConnecting, connectWallet, disconnectWallet } = useAuth();
 
   const wallets = ['yoroi', 'eternl', 'nami']; // Common Cardano wallets
+
+  const handleConnect = async (walletName) => {
+    try {
+      await connectWallet(walletName);
+    } catch (err) {
+      console.error('Connection failed:', err);
+    }
+  };
 
   return (
     <Card className="w-full max-w-md">
       <CardContent className="p-6">
         <div className="flex items-center gap-2 mb-4">
           <Wallet className="h-5 w-5" />
-          <h3 className="text-lg font-semibold">Connect Wallet</h3>
+          <h3 className="text-lg font-semibold">Connect Cardano Wallet</h3>
         </div>
 
-        {!wallet ? (
+        {!user ? (
           <div className="space-y-3">
+            <p className="text-sm text-muted-foreground mb-4">
+              Connect your Cardano wallet to access Hakika's verification features and earn reputation.
+            </p>
             {wallets.map((walletName) => (
               <Button
                 key={walletName}
                 onClick={() => handleConnect(walletName)}
-                disabled={connecting}
+                disabled={isConnecting}
                 className="w-full justify-start gap-2"
                 variant="outline"
               >
-                <Wallet className="h-4 w-4" />
+                {isConnecting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Wallet className="h-4 w-4" />
+                )}
                 Connect {walletName.charAt(0).toUpperCase() + walletName.slice(1)}
               </Button>
             ))}
-            {connecting && <p className="text-sm text-muted-foreground">Connecting...</p>}
+            {isConnecting && (
+              <p className="text-sm text-muted-foreground text-center">
+                Connecting to wallet...
+              </p>
+            )}
           </div>
         ) : (
           <div className="space-y-3">
             <Alert>
               <CheckCircle className="h-4 w-4" />
               <AlertDescription>
-                Connected to {wallet.name}
+                Connected to Cardano wallet
+                <br />
+                <span className="font-mono text-xs">
+                  {user.walletAddress.slice(0, 8)}...{user.walletAddress.slice(-8)}
+                </span>
               </AlertDescription>
             </Alert>
-            <Button onClick={disconnect} variant="destructive" className="w-full">
-              Disconnect
+
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="text-center p-2 bg-muted rounded">
+                <div className="font-semibold">{user.reputation}</div>
+                <div className="text-muted-foreground">Reputation</div>
+              </div>
+              <div className="text-center p-2 bg-muted rounded">
+                <div className="font-semibold">{user.badges.length}</div>
+                <div className="text-muted-foreground">Badges</div>
+              </div>
+            </div>
+
+            <Button onClick={disconnectWallet} variant="destructive" className="w-full">
+              Disconnect Wallet
             </Button>
           </div>
-        )}
-
-        {error && (
-          <Alert variant="destructive" className="mt-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              {error.message || 'Connection failed. Please try again.'}
-            </AlertDescription>
-          </Alert>
         )}
       </CardContent>
     </Card>

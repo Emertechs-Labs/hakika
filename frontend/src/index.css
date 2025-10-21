@@ -118,6 +118,18 @@ All colors MUST be HSL.
     --primary-glow: 262 83% 78%;
     --gradient-hero: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(300 100% 50%) 100%);
   }
+
+  /* Smooth scrolling for the entire page */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better mobile viewport handling */
+  @media (max-width: 768px) {
+    html {
+      scroll-behavior: auto; /* Disable smooth scrolling on mobile for better performance */
+    }
+  }
 }
 
 @layer base {
@@ -149,5 +161,60 @@ All colors MUST be HSL.
 
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent;
+  }
+
+  /* Mobile-first responsive utilities */
+  .container-mobile {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Better mobile touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Improved mobile navigation */
+  @media (max-width: 768px) {
+    .mobile-stack {
+      @apply flex-col space-y-4;
+    }
+
+    .mobile-grid {
+      @apply grid-cols-1 sm:grid-cols-2;
+    }
+
+    .mobile-text {
+      @apply text-sm sm:text-base;
+    }
+  }
+
+  /* Section spacing for one-page design */
+  .section-spacing {
+    @apply py-12 md:py-16 lg:py-20 xl:py-24;
+  }
+
+  /* Hero section specific mobile adjustments */
+  @media (max-width: 640px) {
+    .hero-title {
+      @apply text-3xl leading-tight;
+    }
+
+    .hero-subtitle {
+      @apply text-base leading-relaxed;
+    }
+
+    .hero-stats {
+      @apply grid-cols-3 gap-2;
+    }
+  }
+
+  /* Card responsive improvements */
+  .responsive-card {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  /* Button responsive sizing */
+  .responsive-btn {
+    @apply px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base lg:px-8 lg:py-4 lg:text-lg;
   }
 }

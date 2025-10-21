@@ -28,40 +28,104 @@ export default function Navbar() {
     }
   };
 
-  const NavLinks = () => (
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
     <>
-      <Link
-        to="/"
-        className={`text-sm font-medium transition-colors hover:text-primary ${
-          location.pathname === "/" ? "text-primary" : "text-muted-foreground"
-        }`}
-      >
-        Home
-      </Link>
-      <Link
-        to="/feed"
-        className={`text-sm font-medium transition-colors hover:text-primary ${
-          location.pathname === "/feed" ? "text-primary" : "text-muted-foreground"
-        }`}
-      >
-        Feed
-      </Link>
-      <Link
-        to="/communities"
-        className={`text-sm font-medium transition-colors hover:text-primary ${
-          location.pathname === "/communities" ? "text-primary" : "text-muted-foreground"
-        }`}
-      >
-        Communities
-      </Link>
-      <Link
-        to="/verification"
-        className={`text-sm font-medium transition-colors hover:text-primary ${
-          location.pathname === "/verification" ? "text-primary" : "text-muted-foreground"
-        }`}
-      >
-        Verification Game
-      </Link>
+      {location.pathname === "/" ? (
+        // One-page navigation for landing page
+        <>
+          <button
+            onClick={() => scrollToSection('hero')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            Home
+          </button>
+          <button
+            onClick={() => scrollToSection('features')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            Features
+          </button>
+          <button
+            onClick={() => scrollToSection('how-it-works')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            How It Works
+          </button>
+          <button
+            onClick={() => scrollToSection('communities')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            Communities
+          </button>
+          <button
+            onClick={() => scrollToSection('verification')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            Verification
+          </button>
+          <button
+            onClick={() => scrollToSection('about')}
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              mobile ? "text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            About
+          </button>
+        </>
+      ) : (
+        // Regular navigation for other pages
+        <>
+          <Link
+            to="/"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              location.pathname === "/" ? "text-primary" : "text-muted-foreground"
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/feed"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              location.pathname === "/feed" ? "text-primary" : "text-muted-foreground"
+            }`}
+          >
+            Feed
+          </Link>
+          <Link
+            to="/communities"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              location.pathname === "/communities" ? "text-primary" : "text-muted-foreground"
+            }`}
+          >
+            Communities
+          </Link>
+          <Link
+            to="/verification"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              location.pathname === "/verification" ? "text-primary" : "text-muted-foreground"
+            }`}
+          >
+            Verification Game
+          </Link>
+        </>
+      )}
     </>
   );
 
@@ -181,7 +245,7 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4 mt-8" role="navigation" aria-label="Mobile navigation">
-                <NavLinks />
+                <NavLinks mobile={true} />
               </nav>
             </SheetContent>
           </Sheet>

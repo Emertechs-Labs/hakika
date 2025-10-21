@@ -1,7 +1,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useWallet } from "@meshsdk/react";
+import axios from "axios";
 
 interface User {
-  address: string;
+  walletAddress: string;
   reputation: number;
   badges: string[];
   verified: boolean;
@@ -10,14 +12,14 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isConnecting: boolean;
-  connectWallet: () => Promise<void>;
+  connectWallet: (walletName: string) => Promise<void>;
   disconnectWallet: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock wallet connection for demo
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { connect, wallet, disconnect: meshDisconnect, error: meshError } = useWallet();
   const [user, setUser] = useState<User | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -29,30 +31,73 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const connectWallet = async () => {
+  useEffect(() => {
+    // Handle wallet connection changes
+    const handleWalletChange = async () => {
+      if (wallet) {
+        try {
+          const address = await wallet.getChangeAddress();
+          const stakeAddress = await wallet.getRewardAddresses();
+
+          // Fetch or create user profile from backend
+          try {
+            const response = await axios.get(`/api/users/${encodeURIComponent(address)}`);
+            let userData = response.data;
+
+            if (!userData) {
+              // Create new user if doesn't exist
+              const createResponse = await axios.post(`/api/users/${encodeURIComponent(address)}/profile`);
+              userData = createResponse.data;
+            }
+
+            const userProfile: User = {
+              walletAddress: address,
+              reputation: userData.reputation || 0,
+              badges: userData.badges || [],
+              verified: userData.badges?.includes("Verified") || false,
+            };
+
+            setUser(userProfile);
+            localStorage.setItem("hakika-user", JSON.stringify(userProfile));
+          } catch (backendError) {
+            console.warn("Backend not available, using local wallet data:", backendError);
+            // Fallback to local-only mode if backend is unavailable
+            const userProfile: User = {
+              walletAddress: address,
+              reputation: 0,
+              badges: ["New User"],
+              verified: false,
+            };
+
+            setUser(userProfile);
+            localStorage.setItem("hakika-user", JSON.stringify(userProfile));
+          }
+        } catch (error) {
+          console.error("Failed to fetch user data:", error);
+        }
+      } else {
+        setUser(null);
+        localStorage.removeItem("hakika-user");
+      }
+    };
+
+    handleWalletChange();
+  }, [wallet]);
+
+  const connectWallet = async (walletName: string) => {
     setIsConnecting(true);
     try {
-      // Mock Web3 wallet connection
-      // In production, integrate with ethers.js or web3.js
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      const mockUser: User = {
-        address: "0x" + Math.random().toString(16).substr(2, 40),
-        reputation: Math.floor(Math.random() * 1000) + 100,
-        badges: ["Early Adopter", "Fact Checker"],
-        verified: true,
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem("hakika-user", JSON.stringify(mockUser));
+      await connect(walletName);
     } catch (error) {
       console.error("Failed to connect wallet:", error);
+      throw error;
     } finally {
       setIsConnecting(false);
     }
   };
 
   const disconnectWallet = () => {
+    meshDisconnect();
     setUser(null);
     localStorage.removeItem("hakika-user");
   };

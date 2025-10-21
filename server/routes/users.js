@@ -6,7 +6,8 @@ const router = express.Router();
 // Get user profile
 router.get('/:walletAddress', async (req, res) => {
   try {
-    const user = await User.findOne({ walletAddress: req.params.walletAddress });
+    const walletAddress = decodeURIComponent(req.params.walletAddress);
+    const user = await User.findOne({ walletAddress });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -16,12 +17,34 @@ router.get('/:walletAddress', async (req, res) => {
   }
 });
 
+// Create or get user profile
+router.post('/:walletAddress/profile', async (req, res) => {
+  try {
+    const walletAddress = decodeURIComponent(req.params.walletAddress);
+    let user = await User.findOne({ walletAddress });
+
+    if (!user) {
+      user = new User({
+        walletAddress,
+        reputation: 0,
+        badges: ["New User"]
+      });
+      await user.save();
+    }
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Update reputation/badges (e.g., after verification)
 router.post('/:walletAddress/update', async (req, res) => {
   try {
+    const walletAddress = decodeURIComponent(req.params.walletAddress);
     const { reputation, badges } = req.body;
     const user = await User.findOneAndUpdate(
-      { walletAddress: req.params.walletAddress },
+      { walletAddress },
       { $inc: { reputation }, $addToSet: { badges: { $each: badges } } },
       { new: true, upsert: true }
     );
