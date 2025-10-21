@@ -100,6 +100,24 @@ All colors MUST be HSL.
     --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.5);
     --shadow-glow: 0 0 20px hsl(217 91% 60% / 0.4);
   }
+
+  .blue {
+    --primary: 217 91% 50%;
+    --primary-glow: 217 91% 70%;
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 50%) 0%, hsl(200 100% 50%) 100%);
+  }
+
+  .green {
+    --primary: 142 71% 45%;
+    --primary-glow: 142 71% 65%;
+    --gradient-hero: linear-gradient(135deg, hsl(142 71% 45%) 0%, hsl(120 60% 50%) 100%);
+  }
+
+  .purple {
+    --primary: 262 83% 58%;
+    --primary-glow: 262 83% 78%;
+    --gradient-hero: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(300 100% 50%) 100%);
+  }
 }
 
 @layer base {

@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme, toggleTheme } = useTheme();
   const { user, isConnecting, connectWallet, disconnectWallet } = useAuth();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -99,10 +99,33 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center space-x-2">
-          {/* Theme Toggle */}
-          <Button variant="ghost" size="icon" onClick={toggleTheme}>
-            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-          </Button>
+          {/* Theme Selector */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Sun className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Theme</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("blue")}>
+                Blue
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("green")}>
+                Green
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("purple")}>
+                Purple
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Wallet Connect / User Menu */}
           {user ? (

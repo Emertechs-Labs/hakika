@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "light" | "dark" | "blue" | "green" | "purple";
 
 interface ThemeContextType {
   theme: Theme;
+  setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
 
@@ -17,17 +18,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
+    root.classList.remove("light", "dark", "blue", "green", "purple");
     root.classList.add(theme);
     localStorage.setItem("hakika-theme", theme);
   }, [theme]);
+
+  const setThemeValue = (newTheme: Theme) => {
+    setTheme(newTheme);
+  };
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme: setThemeValue, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

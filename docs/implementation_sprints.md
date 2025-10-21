@@ -4,8 +4,8 @@ This document outlines a sprint-based plan for implementing the remaining featur
 
 ## Sprint Progress
 - **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
-- **Current Focus**: Advanced Components (Completed) - Added infinite scroll for posts, improved navigation.
-- **Next**: Theming (In Progress)
+- **Current Focus**: Theming (Completed) - Added multiple theme options (light, dark, blue, green, purple) with theme selector.
+- **Sprint 2 Complete!** All stories implemented. Ready for Sprint 3.
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.
