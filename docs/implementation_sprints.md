@@ -3,9 +3,8 @@
 This document outlines a sprint-based plan for implementing the remaining features in Hakika, prioritized by AI focus and frontend needs. Each feature is broken into user stories with story points (effort estimates using Fibonacci scale: 1=trivial, 2=small, 3=medium, 5=large, 8=xlarge, 13=epic). Sprints are 2 weeks each, assuming a small team (1-2 devs).
 
 ## Sprint Progress
-- **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
-- **Current Focus**: Theming (Completed) - Added multiple theme options (light, dark, blue, green, purple) with theme selector.
-- **Sprint 2 Complete!** All stories implemented. Ready for Sprint 3.
+- **Sprint 3 Started**: October 21, 2025 - Advanced Features & Polish.
+- **Current Focus**: IPFS Integration (In Progress)
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.
