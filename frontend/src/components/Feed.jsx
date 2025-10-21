@@ -15,8 +15,15 @@ const Feed = () => {
     try {
       const response = await axios.get('http://localhost:5000/api/posts');
       setPosts(response.data);
+      // Cache posts locally for offline
+      localStorage.setItem('cachedPosts', JSON.stringify(response.data));
     } catch (err) {
       console.error('Failed to fetch posts:', err);
+      // Try to load from cache
+      const cached = localStorage.getItem('cachedPosts');
+      if (cached) {
+        setPosts(JSON.parse(cached));
+      }
     } finally {
       setLoading(false);
     }
