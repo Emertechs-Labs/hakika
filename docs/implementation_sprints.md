@@ -4,8 +4,8 @@ This document outlines a sprint-based plan for implementing the remaining featur
 
 ## Sprint Progress
 - **Sprint 2 Started**: October 21, 2025 - Frontend Polish & Gamification.
-- **Current Focus**: Accessibility (Completed) - Added ARIA labels, screen reader support, keyboard navigation.
-- **Next**: Advanced Components (In Progress)
+- **Current Focus**: Advanced Components (Completed) - Added infinite scroll for posts, improved navigation.
+- **Next**: Theming (In Progress)
 
 ## Sprint Planning Assumptions
 - **Prioritization**: AI core first, then frontend polish, mobile/PWA, UI/UX, and other gaps.
