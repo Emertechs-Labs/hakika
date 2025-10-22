@@ -14,7 +14,8 @@
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "cors": "^2.8.5",
-    "@meshsdk/core": "^1.7.0"
+    "@meshsdk/core": "^1.7.0",
+    "express-rate-limit": "^7.1.5"
   },
   "devDependencies": {
     "jest": "^29.7.0",
