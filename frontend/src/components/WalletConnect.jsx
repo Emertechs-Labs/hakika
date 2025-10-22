@@ -6,9 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Wallet, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
 
 function WalletConnect() {
-  const { user, isConnecting, connectWallet, disconnectWallet } = useAuth();
-
-  const wallets = ['yoroi', 'eternl', 'nami']; // Common Cardano wallets
+  const { user, isConnecting, availableWallets, connectWallet, disconnectWallet } = useAuth();
 
   const handleConnect = async (walletName) => {
     try {
@@ -31,22 +29,31 @@ function WalletConnect() {
             <p className="text-sm text-muted-foreground mb-4">
               Connect your Cardano wallet to access Hakika's verification features and earn reputation.
             </p>
-            {wallets.map((walletName) => (
-              <Button
-                key={walletName}
-                onClick={() => handleConnect(walletName)}
-                disabled={isConnecting}
-                className="w-full justify-start gap-2"
-                variant="outline"
-              >
-                {isConnecting ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Wallet className="h-4 w-4" />
-                )}
-                Connect {walletName.charAt(0).toUpperCase() + walletName.slice(1)}
-              </Button>
-            ))}
+            {availableWallets.length > 0 ? (
+              availableWallets.map((wallet) => (
+                <Button
+                  key={wallet.name}
+                  onClick={() => handleConnect(wallet.name)}
+                  disabled={isConnecting}
+                  className="w-full justify-start gap-2"
+                  variant="outline"
+                >
+                  {isConnecting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Wallet className="h-4 w-4" />
+                  )}
+                  Connect {wallet.name.charAt(0).toUpperCase() + wallet.name.slice(1)}
+                </Button>
+              ))
+            ) : (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  No Cardano wallets detected. Please install a wallet extension like Nami, Eternl, or Yoroi.
+                </AlertDescription>
+              </Alert>
+            )}
             {isConnecting && (
               <p className="text-sm text-muted-foreground text-center">
                 Connecting to wallet...
@@ -61,7 +68,7 @@ function WalletConnect() {
                 Connected to Cardano wallet
                 <br />
                 <span className="font-mono text-xs">
-                  {user.walletAddress.slice(0, 8)}...{user.walletAddress.slice(-8)}
+                  {user?.walletAddress ? `${user.walletAddress.slice(0, 8)}...${user.walletAddress.slice(-8)}` : '—'}
                 </span>
               </AlertDescription>
             </Alert>

@@ -16,25 +16,12 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger()
   ].filter(Boolean),
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "lodash/isEqual": "lodash-es/isEqual",
-      "lodash/cloneDeep": "lodash-es/cloneDeep",
-      "lodash/merge": "lodash-es/merge",
-      "lodash/get": "lodash-es/get",
-      "lodash/set": "lodash-es/set",
-      "lodash/has": "lodash-es/has",
-      "lodash/isArray": "lodash-es/isArray",
-      "lodash/isObject": "lodash-es/isObject",
-      "lodash/isString": "lodash-es/isString",
-      "lodash/isFunction": "lodash-es/isFunction",
-      "lodash/debounce": "lodash-es/debounce",
-      "lodash/throttle": "lodash-es/throttle",
-    },
+    alias: [
+      { find: "@", replacement: path.resolve(__dirname, "./src") }
+    ],
   },
   optimizeDeps: {
-    exclude: ["@meshsdk/core-cst"],
-    include: ["lodash-es"],
+    exclude: []
   },
   define: {
     global: "globalThis",

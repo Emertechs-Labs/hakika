@@ -11,6 +11,7 @@ import { Sparkles, Upload, Eye, Send } from "lucide-react";
 import { NICHES } from "@/data/mockData";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import axios from "axios";
 
 export default function CreatePost() {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ export default function CreatePost() {
     setTags(tags.filter((t) => t !== tag));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title || !content || !niche) {
       toast.error("Missing Fields", {
         description: "Please fill in all required fields",
@@ -76,12 +77,27 @@ export default function CreatePost() {
       return;
     }
 
-    // Mock submission
-    toast.success("Post Created!", {
-      description: "Your post has been submitted for verification",
-    });
-    
-    navigate("/feed");
+    try {
+      const postData = {
+        title,
+        content,
+        niche,
+        tags,
+        author: user.walletAddress,
+      };
+
+      await axios.post('/api/posts', postData);
+
+      toast.success("Post Created!", {
+        description: "Your post has been submitted for verification",
+      });
+      
+      navigate("/feed");
+    } catch (error) {
+      toast.error("Failed to create post", {
+        description: error.response?.data?.error || "Something went wrong",
+      });
+    }
   };
 
   return (

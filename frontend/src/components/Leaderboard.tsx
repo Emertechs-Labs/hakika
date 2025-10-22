@@ -40,7 +40,7 @@ const Leaderboard = () => {
             <div key={user._id} className="flex items-center gap-4 p-3 rounded-lg bg-muted/50">
               {getIcon(index)}
               <div className="flex-1">
-                <p className="font-medium">{user.walletAddress.substring(0, 10)}...</p>
+                <p className="font-medium">{user?.walletAddress ? `${user.walletAddress.substring(0, 10)}...` : '—'}</p>
                 <p className="text-sm text-muted-foreground">Reputation: {user.reputation}</p>
                 <div className="flex gap-1 mt-1">
                   {user.badges.map((badge, i) => (

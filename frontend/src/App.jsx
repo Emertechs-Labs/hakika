@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { MeshProvider } from '@meshsdk/react';
 import Feed from './components/Feed';
 import CreatePost from './components/CreatePost';
 import Navbar from './components/Navbar';
@@ -31,18 +30,16 @@ class ErrorBoundary extends React.Component {
 function App() {
   return (
     <ErrorBoundary>
-      <MeshProvider>
-        <Router>
-          <div className="min-h-screen bg-gray-100">
-            <Navbar />
-            <WalletConnect />
-            <Routes>
-              <Route path="/" element={<Feed />} />
-              <Route path="/create" element={<CreatePost />} />
-            </Routes>
-          </div>
-        </Router>
-      </MeshProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-100">
+          <Navbar />
+          <WalletConnect />
+          <Routes>
+            <Route path="/" element={<Feed />} />
+            <Route path="/create" element={<CreatePost />} />
+          </Routes>
+        </div>
+      </Router>
     </ErrorBoundary>
   );
 }
